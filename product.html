@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Methimazole for cats - Custom compounded thyroid medication. Flavored liquid for easy administration. PCAB accredited pharmacy.">
+  <title>Methimazole | Akina Animal Health - Custom Pet Medications</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#fef7ed', 100: '#fdedd3', 200: '#fbd7a5', 300: '#f8bb6d',
+              400: '#f4a132', 500: '#ef8a14', 600: '#e0700a', 700: '#ba540b',
+              800: '#944310', 900: '#783910',
+            },
+            secondary: {
+              50: '#f0f7fc', 100: '#e0eff8', 200: '#b9def1', 300: '#7cc3e6',
+              400: '#4ba8d8', 500: '#337ab7', 600: '#2563a0', 700: '#1f4f82',
+              800: '#1d446c', 900: '#1d3a5b',
+            },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- Alpine.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <style>
+    [x-cloak] { display: none !important; }
+    .gradient-text { background: linear-gradient(135deg, #ba540b 0%, #ef8a14 50%, #f4a132 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .btn-primary { background: linear-gradient(135deg, #e0700a 0%, #ef8a14 50%, #f4a132 100%); background-size: 200% 200%; box-shadow: 0 4px 15px -3px rgba(239, 138, 20, 0.4); transition: all 0.5s ease; }
+    .btn-primary:hover { background-position: 100% 100%; box-shadow: 0 8px 25px -5px rgba(239, 138, 20, 0.5); transform: translateY(-2px); }
+    .btn-secondary-blue { background: linear-gradient(135deg, #2563a0 0%, #337ab7 50%, #4ba8d8 100%); background-size: 200% 200%; box-shadow: 0 4px 15px -3px rgba(51, 122, 183, 0.4); transition: all 0.5s ease; }
+    .btn-secondary-blue:hover { background-position: 100% 100%; box-shadow: 0 8px 25px -5px rgba(51, 122, 183, 0.5); transform: translateY(-2px); }
+    .mega-menu { opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; }
+    .menu-trigger:hover .mega-menu, .mega-menu:hover { opacity: 1; visibility: visible; transform: translateY(0); }
+    .card-hover { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    .card-hover:hover { transform: translateY(-8px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); }
+    @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .reveal-left { opacity: 0; transform: translateX(-40px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+    .reveal-left.active { opacity: 1; transform: translateX(0); }
+    .reveal-right { opacity: 0; transform: translateX(40px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+    .reveal-right.active { opacity: 1; transform: translateX(0); }
+    .shine { position: relative; overflow: hidden; }
+    .shine::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%); transform: rotate(30deg) translateX(-100%); transition: transform 0.6s ease; }
+    .shine:hover::after { transform: rotate(30deg) translateX(100%); }
+    .flavor-option { transition: all 0.3s ease; }
+    .flavor-option:hover, .flavor-option.active { border-color: #ef8a14; background: #fef7ed; }
+    .dosage-option { transition: all 0.3s ease; }
+    .dosage-option:hover, .dosage-option.active { border-color: #ef8a14; background: #fef7ed; }
+    .quantity-btn { transition: all 0.2s ease; }
+    .quantity-btn:hover { background: #fef7ed; }
+    .thumbnail { transition: all 0.3s ease; border: 2px solid transparent; }
+    .thumbnail:hover, .thumbnail.active { border-color: #ef8a14; }
+  </style>
+</head>
+<body class="font-sans antialiased text-gray-900 bg-white" x-data="{
+  mobileMenu: false,
+  mainImage: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800&q=80',
+  selectedFlavor: 'chicken',
+  selectedDosage: '2.5mg',
+  selectedSupply: '30',
+  quantity: 1,
+  activeTab: 'description',
+  cartCount: 0
+}">
+
+  <!-- Top Bar -->
+  <div class="bg-gray-900 text-white py-2">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div class="flex items-center gap-4 text-sm">
+          <a href="tel:8552349995" class="flex items-center gap-2 hover:text-primary-400 transition-colors">
+            <i data-lucide="phone" class="w-4 h-4"></i>
+            <span>(855) 234-9995</span>
+          </a>
+          <span class="hidden sm:inline text-gray-500">|</span>
+          <span class="hidden sm:inline text-gray-400">Mon-Fri 8:30 AM - 6 PM EST</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="#" class="text-sm hover:text-primary-400 transition-colors">Create Account</a>
+          <span class="text-gray-500">|</span>
+          <a href="#" class="text-sm hover:text-primary-400 transition-colors">Sign In</a>
+          <span class="text-gray-500">|</span>
+          <a href="cart.html" class="flex items-center gap-1 text-sm hover:text-primary-400 transition-colors">
+            <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+            <span class="bg-primary-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header with Mega Menu -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-lg border-b border-gray-100 shadow-sm"
+          @scroll.window="scrolled = window.scrollY > 50">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center group flex-shrink-0">
+          <img src="https://akinaanimalhealth.com/skin/frontend/akina/default/images/veterinary-compounding-pharmacy.jpg" alt="Akina Animal Health - Veterinary Compounding Pharmacy" class="h-12 lg:h-14 w-auto">
+        </a>
+
+        <!-- Main Action Buttons -->
+        <div class="hidden md:flex items-center gap-3">
+          <a href="prescribe.html" class="btn-primary px-6 py-2.5 text-sm font-semibold text-white rounded-lg">
+            Prescribe Now
+          </a>
+          <a href="shop.html" class="btn-secondary-blue px-6 py-2.5 text-sm font-semibold text-white rounded-lg">
+            Shop Medications
+          </a>
+          <a href="refill.html" class="px-6 py-2.5 text-sm font-semibold text-secondary-600 border-2 border-secondary-600 rounded-lg hover:bg-secondary-50 transition-colors">
+            Refill My Prescription
+          </a>
+        </div>
+
+        <!-- Tagline -->
+        <div class="hidden lg:block text-right">
+          <p class="text-xl font-display font-bold text-primary-600 italic">Kindness Compounded™</p>
+          <p class="text-sm text-gray-600">Call <span class="font-semibold">855.234.9995</span> Fax <span class="font-semibold">855.234.9992</span></p>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button @click="mobileMenu = !mobileMenu" class="md:hidden p-2 rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors">
+          <i x-show="!mobileMenu" data-lucide="menu" class="w-6 h-6"></i>
+          <i x-show="mobileMenu" x-cloak data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+      <!-- Secondary Nav -->
+      <div class="hidden md:flex items-center gap-1 py-3 border-t border-gray-100">
+        <!-- Meet Akina -->
+        <div class="relative menu-trigger">
+          <a href="about.html" class="flex items-center gap-1 px-4 py-2 text-base font-semibold text-gray-700 hover:text-primary-600 rounded-lg hover:bg-primary-50 transition-colors">
+            Meet Akina <i data-lucide="chevron-down" class="w-4 h-4"></i>
+          </a>
+          <div class="mega-menu absolute left-0 top-full pt-4 w-[500px] z-50">
+            <div class="bg-white rounded-2xl shadow-2xl border border-gray-100 p-6">
+              <div class="grid grid-cols-2 gap-6">
+                <div>
+                  <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">About Us</h3>
+                  <div class="space-y-1">
+                    <a href="vision.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center text-primary-600 group-hover:bg-primary-200 transition-colors">
+                        <i data-lucide="eye" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Our Vision</p>
+                        <p class="text-xs text-gray-500">What drives us forward</p>
+                      </div>
+                    </a>
+                    <a href="mission.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center text-primary-600 group-hover:bg-primary-200 transition-colors">
+                        <i data-lucide="target" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Our Mission</p>
+                        <p class="text-xs text-gray-500">Kindness Compounded™</p>
+                      </div>
+                    </a>
+                    <a href="quality.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center text-primary-600 group-hover:bg-primary-200 transition-colors">
+                        <i data-lucide="shield-check" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Quality Assurance</p>
+                        <p class="text-xs text-gray-500">PCAB accredited standards</p>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div>
+                  <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">More</h3>
+                  <div class="space-y-1">
+                    <a href="accreditations.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600 group-hover:bg-amber-200 transition-colors">
+                        <i data-lucide="award" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Accreditations</p>
+                        <p class="text-xs text-gray-500">Our certifications</p>
+                      </div>
+                    </a>
+                    <a href="states.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-secondary-100 flex items-center justify-center text-secondary-600 group-hover:bg-blue-200 transition-colors">
+                        <i data-lucide="map" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">States Served</p>
+                        <p class="text-xs text-gray-500">48 states nationwide</p>
+                      </div>
+                    </a>
+                    <a href="newsroom.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-rose-100 flex items-center justify-center text-rose-600 group-hover:bg-rose-200 transition-colors">
+                        <i data-lucide="newspaper" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Newsroom</p>
+                        <p class="text-xs text-gray-500">Latest updates</p>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Veterinarians -->
+        <div class="relative menu-trigger">
+          <a href="veterinarians.html" class="flex items-center gap-1 px-4 py-2 text-base font-semibold text-gray-700 hover:text-primary-600 rounded-lg hover:bg-primary-50 transition-colors">
+            Veterinarians <i data-lucide="chevron-down" class="w-4 h-4"></i>
+          </a>
+          <div class="mega-menu absolute left-0 top-full pt-4 w-[600px] z-50">
+            <div class="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
+              <div class="grid grid-cols-5">
+                <div class="col-span-3 p-6">
+                  <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">For Veterinarians</h3>
+                  <div class="space-y-1">
+                    <a href="prescribe.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-600 to-primary-400 flex items-center justify-center text-white">
+                        <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Vet Portal</p>
+                        <p class="text-xs text-gray-500">Prescribe online easily</p>
+                      </div>
+                      <i data-lucide="arrow-right" class="w-4 h-4 text-primary-500 ml-auto"></i>
+                    </a>
+                    <a href="formulations.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-violet-100 flex items-center justify-center text-violet-600">
+                        <i data-lucide="flask-conical" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Custom Formulations</p>
+                        <p class="text-xs text-gray-500">Tailored medications</p>
+                      </div>
+                    </a>
+                    <a href="contact.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-secondary-100 flex items-center justify-center text-secondary-600">
+                        <i data-lucide="message-circle" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Ask Our Pharmacists</p>
+                        <p class="text-xs text-gray-500">Expert consultation</p>
+                      </div>
+                    </a>
+                    <a href="referral.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600">
+                        <i data-lucide="users" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Referral Program</p>
+                        <p class="text-xs text-gray-500">Partner with us</p>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-span-2 bg-gradient-to-br from-secondary-600 to-secondary-400 p-6 flex flex-col justify-center">
+                  <div class="text-5xl mb-4">👩‍⚕️</div>
+                  <h4 class="text-lg font-bold text-white mb-2">Vet Portal</h4>
+                  <p class="text-sm text-secondary-100 mb-4">Access our online portal to prescribe medications quickly and efficiently.</p>
+                  <a href="prescribe.html" class="inline-flex items-center gap-2 px-4 py-2 bg-white text-secondary-600 font-semibold rounded-full text-sm hover:bg-secondary-50 transition-colors">
+                    Access Portal
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pet Parents -->
+        <div class="relative menu-trigger">
+          <a href="pet-parents.html" class="flex items-center gap-1 px-4 py-2 text-base font-semibold text-gray-700 hover:text-primary-600 rounded-lg hover:bg-primary-50 transition-colors">
+            Pet Parents <i data-lucide="chevron-down" class="w-4 h-4"></i>
+          </a>
+          <div class="mega-menu absolute left-0 top-full pt-4 w-[600px] z-50">
+            <div class="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
+              <div class="grid grid-cols-5">
+                <div class="col-span-3 p-6">
+                  <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">For Pet Parents</h3>
+                  <div class="space-y-1">
+                    <a href="shop.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-600 to-primary-400 flex items-center justify-center text-white">
+                        <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Shop Medications</p>
+                        <p class="text-xs text-gray-500">Browse our products</p>
+                      </div>
+                      <i data-lucide="arrow-right" class="w-4 h-4 text-primary-500 ml-auto"></i>
+                    </a>
+                    <a href="refill.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-secondary-100 flex items-center justify-center text-secondary-600">
+                        <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Refill Prescription</p>
+                        <p class="text-xs text-gray-500">Quick and easy refills</p>
+                      </div>
+                    </a>
+                    <a href="kind-program.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-rose-100 flex items-center justify-center text-rose-600">
+                        <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">KiND Program</p>
+                        <p class="text-xs text-gray-500">Collaborative pet care</p>
+                      </div>
+                    </a>
+                    <a href="contact.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-violet-100 flex items-center justify-center text-violet-600">
+                        <i data-lucide="phone" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Pharmacist Consultation</p>
+                        <p class="text-xs text-gray-500">Get expert advice</p>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-span-2 bg-gradient-to-br from-primary-600 to-primary-400 p-6 flex flex-col justify-center">
+                  <div class="text-5xl mb-4">🐕</div>
+                  <h4 class="text-lg font-bold text-white mb-2">Happy Pets</h4>
+                  <p class="text-sm text-primary-100 mb-4">Custom flavored medications your pet will actually enjoy taking.</p>
+                  <a href="shop.html" class="inline-flex items-center gap-2 px-4 py-2 bg-white text-primary-600 font-semibold rounded-full text-sm hover:bg-primary-50 transition-colors">
+                    Shop Now
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <a href="contact.html" class="px-4 py-2 text-base font-semibold text-gray-700 hover:text-primary-600 rounded-lg hover:bg-primary-50 transition-colors">
+          Contact Us
+        </a>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div x-show="mobileMenu" x-cloak
+           x-transition:enter="transition ease-out duration-200"
+           x-transition:enter-start="opacity-0 -translate-y-4"
+           x-transition:enter-end="opacity-100 translate-y-0"
+           x-transition:leave="transition ease-in duration-150"
+           x-transition:leave-start="opacity-100 translate-y-0"
+           x-transition:leave-end="opacity-0 -translate-y-4"
+           class="md:hidden py-6 border-t border-gray-100">
+        <!-- Mobile Action Buttons -->
+        <div class="space-y-3 mb-6">
+          <a href="prescribe.html" class="block w-full btn-primary px-4 py-3 text-center text-sm font-semibold text-white rounded-lg">
+            Prescribe Now
+          </a>
+          <a href="shop.html" class="block w-full btn-secondary-blue px-4 py-3 text-center text-sm font-semibold text-white rounded-lg">
+            Shop Medications
+          </a>
+          <a href="refill.html" class="block w-full px-4 py-3 text-center text-sm font-semibold text-secondary-600 border-2 border-secondary-600 rounded-lg">
+            Refill My Prescription
+          </a>
+        </div>
+        <div class="space-y-2 border-t border-gray-100 pt-6">
+          <a href="about.html" class="block px-4 py-3 text-base font-semibold text-gray-900 rounded-xl hover:bg-gray-50">Meet Akina</a>
+          <a href="veterinarians.html" class="block px-4 py-3 text-base font-semibold text-gray-900 rounded-xl hover:bg-gray-50">Veterinarians</a>
+          <a href="pet-parents.html" class="block px-4 py-3 text-base font-semibold text-gray-900 rounded-xl hover:bg-gray-50">Pet Parents</a>
+          <a href="contact.html" class="block px-4 py-3 text-base font-semibold text-gray-900 rounded-xl hover:bg-gray-50">Contact</a>
+        </div>
+        <div class="mt-6 pt-6 border-t border-gray-100 space-y-3">
+          <a href="#" class="block w-full px-4 py-3 text-center text-sm font-semibold text-gray-700 border-2 border-gray-200 rounded-full hover:border-primary-300">Sign In</a>
+          <a href="#" class="block w-full px-4 py-3 text-center text-sm font-semibold text-primary-600 hover:text-primary-700">Create Account</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+
+  <!-- Breadcrumb -->
+  <section class="bg-gray-50 py-4 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="flex items-center gap-2 text-sm">
+        <a href="index.html" class="text-gray-500 hover:text-primary-600 transition-colors">Home</a>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+        <a href="shop.html" class="text-gray-500 hover:text-primary-600 transition-colors">Shop</a>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+        <span class="text-primary-600 font-medium">Methimazole</span>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Product Section -->
+  <section class="py-12 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16">
+        <!-- Product Images -->
+        <div class="reveal-left">
+          <div class="relative mb-4">
+            <div class="aspect-square rounded-3xl overflow-hidden bg-gray-100">
+              <img :src="mainImage" alt="Methimazole" class="w-full h-full object-cover">
+            </div>
+            <div class="absolute top-4 left-4 flex flex-col gap-2">
+              <span class="px-3 py-1.5 bg-primary-500 text-white text-sm font-semibold rounded-full">Popular</span>
+              <span class="px-3 py-1.5 bg-emerald-500 text-white text-sm font-semibold rounded-full">In Stock</span>
+            </div>
+            <button class="absolute top-4 right-4 w-12 h-12 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg">
+              <i data-lucide="heart" class="w-6 h-6 text-gray-400 hover:text-primary-500"></i>
+            </button>
+          </div>
+          <!-- Thumbnails -->
+          <div class="grid grid-cols-4 gap-3">
+            <button @click="mainImage = 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800&q=80'"
+                    :class="mainImage.includes('1514888286974') ? 'active' : ''"
+                    class="thumbnail aspect-square rounded-xl overflow-hidden bg-gray-100">
+              <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=200&q=80" alt="Product view 1" class="w-full h-full object-cover">
+            </button>
+            <button @click="mainImage = 'https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=800&q=80'"
+                    :class="mainImage.includes('1573865526739') ? 'active' : ''"
+                    class="thumbnail aspect-square rounded-xl overflow-hidden bg-gray-100">
+              <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=200&q=80" alt="Product view 2" class="w-full h-full object-cover">
+            </button>
+            <button @click="mainImage = 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=800&q=80'"
+                    :class="mainImage.includes('1518791841217') ? 'active' : ''"
+                    class="thumbnail aspect-square rounded-xl overflow-hidden bg-gray-100">
+              <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=200&q=80" alt="Product view 3" class="w-full h-full object-cover">
+            </button>
+            <button @click="mainImage = 'https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=800&q=80'"
+                    :class="mainImage.includes('1533738363') ? 'active' : ''"
+                    class="thumbnail aspect-square rounded-xl overflow-hidden bg-gray-100">
+              <img src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=200&q=80" alt="Product view 4" class="w-full h-full object-cover">
+            </button>
+          </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="reveal-right">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="px-3 py-1 bg-primary-50 text-primary-600 text-sm font-semibold rounded-lg">Thyroid</span>
+            <span class="text-gray-500 text-sm">For Cats</span>
+          </div>
+
+          <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 font-display mb-4">Methimazole</h1>
+
+          <p class="text-lg text-gray-600 mb-6">
+            Custom compounded thyroid medication for cats with hyperthyroidism. Available in flavored liquids and transdermal gels for easy administration.
+          </p>
+
+          <!-- Rating -->
+          <div class="flex items-center gap-4 mb-6 pb-6 border-b border-gray-100">
+            <div class="flex items-center gap-1">
+              <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+              <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+              <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+              <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+              <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+            </div>
+            <span class="text-sm font-medium text-gray-600">4.9 (128 reviews)</span>
+          </div>
+
+          <!-- Price -->
+          <div class="mb-8">
+            <div class="flex items-baseline gap-3">
+              <span class="text-4xl font-bold text-gray-900">$24.99</span>
+              <span class="text-lg text-gray-500">/ 30-day supply</span>
+            </div>
+            <p class="text-sm text-emerald-600 mt-1 flex items-center gap-1">
+              <i data-lucide="check-circle" class="w-4 h-4"></i>
+              Prescription required
+            </p>
+          </div>
+
+          <!-- Flavor Selection -->
+          <div class="mb-6">
+            <h3 class="text-sm font-semibold text-gray-900 mb-3">Flavor</h3>
+            <div class="flex flex-wrap gap-3">
+              <button @click="selectedFlavor = 'chicken'"
+                      :class="selectedFlavor === 'chicken' ? 'active' : ''"
+                      class="flavor-option px-5 py-3 rounded-xl border-2 border-gray-200 text-sm font-medium flex items-center gap-2">
+                <span>Chicken</span>
+              </button>
+              <button @click="selectedFlavor = 'tuna'"
+                      :class="selectedFlavor === 'tuna' ? 'active' : ''"
+                      class="flavor-option px-5 py-3 rounded-xl border-2 border-gray-200 text-sm font-medium flex items-center gap-2">
+                <span>Tuna</span>
+              </button>
+              <button @click="selectedFlavor = 'unflavored'"
+                      :class="selectedFlavor === 'unflavored' ? 'active' : ''"
+                      class="flavor-option px-5 py-3 rounded-xl border-2 border-gray-200 text-sm font-medium flex items-center gap-2">
+                <span>Unflavored</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Dosage Selection -->
+          <div class="mb-6">
+            <h3 class="text-sm font-semibold text-gray-900 mb-3">Dosage Strength</h3>
+            <div class="flex flex-wrap gap-3">
+              <button @click="selectedDosage = '1.25mg'"
+                      :class="selectedDosage === '1.25mg' ? 'active' : ''"
+                      class="dosage-option px-5 py-3 rounded-xl border-2 border-gray-200 text-sm font-medium">
+                1.25mg
+              </button>
+              <button @click="selectedDosage = '2.5mg'"
+                      :class="selectedDosage === '2.5mg' ? 'active' : ''"
+                      class="dosage-option px-5 py-3 rounded-xl border-2 border-gray-200 text-sm font-medium">
+                2.5mg
+              </button>
+              <button @click="selectedDosage = '5mg'"
+                      :class="selectedDosage === '5mg' ? 'active' : ''"
+                      class="dosage-option px-5 py-3 rounded-xl border-2 border-gray-200 text-sm font-medium">
+                5mg
+              </button>
+              <button @click="selectedDosage = '7.5mg'"
+                      :class="selectedDosage === '7.5mg' ? 'active' : ''"
+                      class="dosage-option px-5 py-3 rounded-xl border-2 border-gray-200 text-sm font-medium">
+                7.5mg
+              </button>
+            </div>
+          </div>
+
+          <!-- Supply Duration -->
+          <div class="mb-8">
+            <h3 class="text-sm font-semibold text-gray-900 mb-3">Supply</h3>
+            <div class="flex flex-wrap gap-3">
+              <button @click="selectedSupply = '30'"
+                      :class="selectedSupply === '30' ? 'active' : ''"
+                      class="dosage-option px-5 py-3 rounded-xl border-2 border-gray-200 text-sm font-medium">
+                30 days
+              </button>
+              <button @click="selectedSupply = '60'"
+                      :class="selectedSupply === '60' ? 'active' : ''"
+                      class="dosage-option px-5 py-3 rounded-xl border-2 border-gray-200 text-sm font-medium">
+                60 days
+              </button>
+              <button @click="selectedSupply = '90'"
+                      :class="selectedSupply === '90' ? 'active' : ''"
+                      class="dosage-option px-5 py-3 rounded-xl border-2 border-gray-200 text-sm font-medium">
+                90 days
+              </button>
+            </div>
+          </div>
+
+          <!-- Quantity & Add to Cart -->
+          <div class="flex flex-col sm:flex-row gap-4 mb-8">
+            <div class="flex items-center border-2 border-gray-200 rounded-xl">
+              <button @click="quantity > 1 ? quantity-- : null" class="quantity-btn w-12 h-12 flex items-center justify-center text-gray-500 hover:text-primary-600 rounded-l-xl">
+                <i data-lucide="minus" class="w-5 h-5"></i>
+              </button>
+              <span class="w-16 text-center font-semibold text-lg" x-text="quantity"></span>
+              <button @click="quantity++" class="quantity-btn w-12 h-12 flex items-center justify-center text-gray-500 hover:text-primary-600 rounded-r-xl">
+                <i data-lucide="plus" class="w-5 h-5"></i>
+              </button>
+            </div>
+            <button @click="cartCount += quantity" class="flex-1 btn-primary shine px-8 py-4 text-lg font-semibold text-white rounded-xl flex items-center justify-center gap-3">
+              <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+              Add to Cart
+            </button>
+          </div>
+
+          <!-- Trust Badges -->
+          <div class="grid grid-cols-3 gap-4 p-6 bg-gray-50 rounded-2xl">
+            <div class="text-center">
+              <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-primary-100 flex items-center justify-center text-primary-600">
+                <i data-lucide="truck" class="w-6 h-6"></i>
+              </div>
+              <p class="text-xs font-medium text-gray-600">Free Shipping $49+</p>
+            </div>
+            <div class="text-center">
+              <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+                <i data-lucide="shield-check" class="w-6 h-6"></i>
+              </div>
+              <p class="text-xs font-medium text-gray-600">PCAB Accredited</p>
+            </div>
+            <div class="text-center">
+              <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-secondary-100 flex items-center justify-center text-secondary-600">
+                <i data-lucide="clock" class="w-6 h-6"></i>
+              </div>
+              <p class="text-xs font-medium text-gray-600">Same-Day Ship</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Tabs -->
+  <section class="py-12 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden reveal">
+        <!-- Tab Headers -->
+        <div class="flex border-b border-gray-100 overflow-x-auto">
+          <button @click="activeTab = 'description'"
+                  :class="activeTab === 'description' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                  class="px-8 py-5 text-sm font-semibold border-b-2 transition-colors whitespace-nowrap">
+            Description
+          </button>
+          <button @click="activeTab = 'dosage'"
+                  :class="activeTab === 'dosage' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                  class="px-8 py-5 text-sm font-semibold border-b-2 transition-colors whitespace-nowrap">
+            Dosage & Administration
+          </button>
+          <button @click="activeTab = 'reviews'"
+                  :class="activeTab === 'reviews' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                  class="px-8 py-5 text-sm font-semibold border-b-2 transition-colors whitespace-nowrap">
+            Reviews (128)
+          </button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="p-8 lg:p-12">
+          <!-- Description Tab -->
+          <div x-show="activeTab === 'description'" x-transition>
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">About Methimazole</h3>
+            <div class="prose prose-lg max-w-none text-gray-600">
+              <p class="mb-4">
+                Methimazole is an antithyroid medication used to treat hyperthyroidism in cats. It works by reducing the amount of thyroid hormone produced by the thyroid gland.
+              </p>
+              <p class="mb-6">
+                At Akina Animal Health, we compound Methimazole in pet-friendly formats that make administering this crucial medication easier for both you and your cat.
+              </p>
+              <h4 class="text-lg font-semibold text-gray-900 mt-8 mb-4">Available Forms:</h4>
+              <ul class="list-disc pl-6 space-y-2">
+                <li>Flavored oral liquids (chicken, tuna, unflavored)</li>
+                <li>Transdermal gels (applied to inner ear flap)</li>
+                <li>Tiny flavored tablets</li>
+                <li>Flavored treats</li>
+              </ul>
+              <h4 class="text-lg font-semibold text-gray-900 mt-8 mb-4">Key Benefits:</h4>
+              <ul class="list-disc pl-6 space-y-2">
+                <li>Custom dosages tailored to your cat's specific needs</li>
+                <li>Multiple flavor options for picky cats</li>
+                <li>Transdermal option for cats who won't take oral medications</li>
+                <li>PCAB accredited compounding for quality assurance</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Dosage Tab -->
+          <div x-show="activeTab === 'dosage'" x-transition>
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">Dosage & Administration</h3>
+            <div class="prose prose-lg max-w-none text-gray-600">
+              <div class="bg-amber-50 border border-amber-200 rounded-xl p-6 mb-8">
+                <div class="flex items-start gap-4">
+                  <i data-lucide="alert-triangle" class="w-6 h-6 text-amber-500 flex-shrink-0 mt-1"></i>
+                  <div>
+                    <p class="font-semibold text-amber-800">Prescription Required</p>
+                    <p class="text-amber-700 text-sm">This medication requires a valid prescription from your veterinarian. Dosage should be determined by your vet based on your cat's specific condition.</p>
+                  </div>
+                </div>
+              </div>
+              <h4 class="text-lg font-semibold text-gray-900 mb-4">General Guidelines:</h4>
+              <ul class="list-disc pl-6 space-y-2 mb-6">
+                <li>Typical starting dose: 1.25-2.5mg twice daily</li>
+                <li>Dosage adjustments based on thyroid levels (T4 tests)</li>
+                <li>Usually given with or without food</li>
+                <li>Administer at the same times each day</li>
+              </ul>
+              <h4 class="text-lg font-semibold text-gray-900 mb-4">For Transdermal Gel:</h4>
+              <ul class="list-disc pl-6 space-y-2">
+                <li>Apply to the inner surface of the ear (pinna)</li>
+                <li>Alternate ears with each application</li>
+                <li>Wear gloves when applying</li>
+                <li>Wipe off old medication before applying new dose</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Reviews Tab -->
+          <div x-show="activeTab === 'reviews'" x-transition>
+            <div class="flex flex-col lg:flex-row gap-12">
+              <!-- Review Summary -->
+              <div class="lg:w-1/3">
+                <div class="bg-gray-50 rounded-2xl p-8 text-center">
+                  <div class="text-5xl font-bold text-gray-900 mb-2">4.9</div>
+                  <div class="flex items-center justify-center gap-1 mb-2">
+                    <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+                    <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+                    <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+                    <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+                    <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+                  </div>
+                  <p class="text-gray-500">Based on 128 reviews</p>
+                </div>
+              </div>
+
+              <!-- Reviews List -->
+              <div class="lg:w-2/3 space-y-6">
+                <div class="border-b border-gray-100 pb-6">
+                  <div class="flex items-start justify-between mb-3">
+                    <div>
+                      <p class="font-semibold text-gray-900">Sarah M.</p>
+                      <div class="flex items-center gap-1 mt-1">
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                      </div>
+                    </div>
+                    <span class="text-sm text-gray-400">2 weeks ago</span>
+                  </div>
+                  <p class="text-gray-600">My cat Whiskers actually looks forward to his medication now! The chicken flavor makes all the difference. Shipping was fast and the pharmacist was helpful with dosage questions.</p>
+                </div>
+
+                <div class="border-b border-gray-100 pb-6">
+                  <div class="flex items-start justify-between mb-3">
+                    <div>
+                      <p class="font-semibold text-gray-900">Michael R.</p>
+                      <div class="flex items-center gap-1 mt-1">
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                      </div>
+                    </div>
+                    <span class="text-sm text-gray-400">1 month ago</span>
+                  </div>
+                  <p class="text-gray-600">The transdermal gel option is a lifesaver! My elderly cat won't take pills or liquids, but the ear gel works perfectly. Her thyroid levels are back to normal.</p>
+                </div>
+
+                <div class="pb-6">
+                  <div class="flex items-start justify-between mb-3">
+                    <div>
+                      <p class="font-semibold text-gray-900">Jennifer L.</p>
+                      <div class="flex items-center gap-1 mt-1">
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-gray-300"></i>
+                      </div>
+                    </div>
+                    <span class="text-sm text-gray-400">2 months ago</span>
+                  </div>
+                  <p class="text-gray-600">Great product and fair pricing. Only wish there were more flavor options for cats who are extra picky. But overall very satisfied with the service!</p>
+                </div>
+
+                <button class="w-full py-3 text-primary-600 font-semibold border-2 border-primary-200 rounded-xl hover:bg-primary-50 transition-colors">
+                  Load More Reviews
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Products -->
+  <section class="py-16 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl lg:text-3xl font-bold text-gray-900 font-display mb-8 reveal">Related Products</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <a href="product.html" class="card-hover bg-white rounded-2xl overflow-hidden border border-gray-100 reveal">
+          <div class="relative overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400&q=80" alt="Atenolol" class="w-full h-48 object-cover">
+          </div>
+          <div class="p-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-xs font-medium text-amber-600 bg-amber-50 px-2 py-1 rounded">Heart</span>
+              <span class="text-xs text-gray-500">For Cats</span>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-1">Atenolol</h3>
+            <p class="text-sm text-gray-500 mb-4">Heart medication for cats</p>
+            <span class="text-lg font-bold text-gray-900">$26.99</span>
+          </div>
+        </a>
+
+        <a href="product.html" class="card-hover bg-white rounded-2xl overflow-hidden border border-gray-100 reveal" style="transition-delay: 0.1s;">
+          <div class="relative overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=400&q=80" alt="Prednisolone" class="w-full h-48 object-cover">
+          </div>
+          <div class="p-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-xs font-medium text-rose-600 bg-rose-50 px-2 py-1 rounded">Inflammation</span>
+              <span class="text-xs text-gray-500">For Cats</span>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-1">Prednisolone</h3>
+            <p class="text-sm text-gray-500 mb-4">Anti-inflammatory for cats</p>
+            <span class="text-lg font-bold text-gray-900">$19.99</span>
+          </div>
+        </a>
+
+        <a href="product.html" class="card-hover bg-white rounded-2xl overflow-hidden border border-gray-100 reveal" style="transition-delay: 0.2s;">
+          <div class="relative overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400&q=80" alt="Amlodipine" class="w-full h-48 object-cover">
+          </div>
+          <div class="p-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-xs font-medium text-violet-600 bg-violet-50 px-2 py-1 rounded">Blood Pressure</span>
+              <span class="text-xs text-gray-500">For Cats</span>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-1">Amlodipine</h3>
+            <p class="text-sm text-gray-500 mb-4">Blood pressure control</p>
+            <span class="text-lg font-bold text-gray-900">$22.99</span>
+          </div>
+        </a>
+
+        <a href="product.html" class="card-hover bg-white rounded-2xl overflow-hidden border border-gray-100 reveal" style="transition-delay: 0.3s;">
+          <div class="relative overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=400&q=80" alt="Famotidine" class="w-full h-48 object-cover">
+          </div>
+          <div class="p-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-xs font-medium text-secondary-600 bg-secondary-50 px-2 py-1 rounded">Digestive</span>
+              <span class="text-xs text-gray-500">For Cats</span>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-1">Famotidine</h3>
+            <p class="text-sm text-gray-500 mb-4">Stomach acid reducer</p>
+            <span class="text-lg font-bold text-gray-900">$18.99</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="relative bg-gray-900 text-white overflow-hidden">
+    <div class="border-b border-gray-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+          <div>
+            <h3 class="text-2xl font-bold font-display mb-2">Stay Updated</h3>
+            <p class="text-gray-400">Get tips for pet health and exclusive offers delivered to your inbox.</p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <input type="email" placeholder="Enter your email" class="px-5 py-3 bg-gray-800 border border-gray-700 rounded-full text-white placeholder-gray-500 focus:outline-none focus:border-primary-500 min-w-[280px]">
+            <button class="px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-400 text-white font-semibold rounded-full hover:shadow-lg transition-all flex items-center justify-center gap-2 shine">
+              Subscribe <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="grid gap-12 lg:grid-cols-5">
+        <div class="lg:col-span-2">
+          <div class="mb-6">
+            <img src="https://akinaanimalhealth.com/skin/frontend/akina/default/images/footer_logo_big.png" alt="Akina Animal Health" class="h-16 w-auto">
+          </div>
+          <p class="text-gray-400 leading-relaxed max-w-xs mb-6">Kindness Compounded. Custom veterinary medications made with care.</p>
+          <div class="space-y-4">
+            <a href="tel:8552349995" class="flex items-center gap-3 text-gray-400 hover:text-primary-400 transition-colors">
+              <div class="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center"><i data-lucide="phone" class="w-5 h-5"></i></div>
+              (855) 234-9995
+            </a>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold tracking-wider text-white uppercase mb-5">Shop</h3>
+          <ul class="space-y-3">
+            <li><a href="shop.html" class="text-gray-400 hover:text-white transition-all">All Products</a></li>
+            <li><a href="shop.html" class="text-gray-400 hover:text-white transition-all">For Dogs</a></li>
+            <li><a href="shop.html" class="text-gray-400 hover:text-white transition-all">For Cats</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold tracking-wider text-white uppercase mb-5">Support</h3>
+          <ul class="space-y-3">
+            <li><a href="contact.html" class="text-gray-400 hover:text-white transition-all">Contact Us</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-all">FAQ</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-all">Shipping Info</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold tracking-wider text-white uppercase mb-5">Legal</h3>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-400 hover:text-white transition-all">Privacy Policy</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-all">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <p class="text-center text-sm text-gray-500">© 2024 Akina Animal Health. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const revealOnScroll = () => {
+      revealElements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        if (elementTop < window.innerHeight - 150) element.classList.add('active');
+      });
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+  </script>
+</body>
+</html>

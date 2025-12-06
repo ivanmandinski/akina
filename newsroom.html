@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Newsroom - Stay updated with the latest news, press releases, and updates from Akina Animal Health.">
+  <title>Newsroom | Akina Animal Health - Kindness Compounded™</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#fef7ed', 100: '#fdedd3', 200: '#fbd7a5', 300: '#f8bb6d',
+              400: '#f4a132', 500: '#ef8a14', 600: '#e0700a', 700: '#ba540b',
+              800: '#944310', 900: '#783910',
+            },
+            secondary: {
+              50: '#f0f7fc', 100: '#e0eff8', 200: '#b9def1', 300: '#7cc3e6',
+              400: '#4ba8d8', 500: '#337ab7', 600: '#2563a0', 700: '#1f4f82',
+              800: '#1d446c', 900: '#1d3a5b',
+            },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- Alpine.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <style>
+    [x-cloak] { display: none !important; }
+    .gradient-text { background: linear-gradient(135deg, #ba540b 0%, #ef8a14 50%, #f4a132 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .btn-primary { background: linear-gradient(135deg, #e0700a 0%, #ef8a14 50%, #f4a132 100%); background-size: 200% 200%; box-shadow: 0 4px 15px -3px rgba(239, 138, 20, 0.4); transition: all 0.5s ease; }
+    .btn-primary:hover { background-position: 100% 100%; box-shadow: 0 8px 25px -5px rgba(239, 138, 20, 0.5); transform: translateY(-2px); }
+    .btn-secondary-blue { background: linear-gradient(135deg, #2563a0 0%, #337ab7 50%, #4ba8d8 100%); background-size: 200% 200%; box-shadow: 0 4px 15px -3px rgba(51, 122, 183, 0.4); transition: all 0.5s ease; }
+    .btn-secondary-blue:hover { background-position: 100% 100%; box-shadow: 0 8px 25px -5px rgba(51, 122, 183, 0.5); transform: translateY(-2px); }
+    .mega-menu { opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; }
+    .menu-trigger:hover .mega-menu, .mega-menu:hover { opacity: 1; visibility: visible; transform: translateY(0); }
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .card-hover { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    .card-hover:hover { transform: translateY(-8px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); }
+    .shine { position: relative; overflow: hidden; }
+    .shine::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%); transform: rotate(30deg) translateX(-100%); transition: transform 0.6s ease; }
+    .shine:hover::after { transform: rotate(30deg) translateX(100%); }
+    .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  </style>
+</head>
+<body class="font-sans antialiased text-gray-900 bg-white" x-data="{ mobileMenu: false }">
+
+  <!-- Top Bar -->
+  <div class="bg-gray-900 text-white py-2">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div class="flex items-center gap-4 text-sm">
+          <a href="tel:8552349995" class="flex items-center gap-2 hover:text-primary-400 transition-colors">
+            <i data-lucide="phone" class="w-4 h-4"></i>
+            <span>(855) 234-9995</span>
+          </a>
+          <span class="hidden sm:inline text-gray-500">|</span>
+          <span class="hidden sm:inline text-gray-400">Mon-Fri 8:30 AM - 6 PM EST</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="#" class="text-sm hover:text-primary-400 transition-colors">Create Account</a>
+          <span class="text-gray-500">|</span>
+          <a href="#" class="text-sm hover:text-primary-400 transition-colors">Sign In</a>
+          <span class="text-gray-500">|</span>
+          <a href="cart.html" class="flex items-center gap-1 text-sm hover:text-primary-400 transition-colors">
+            <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+            <span class="bg-primary-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header with Mega Menu -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-lg border-b border-gray-100 shadow-sm"
+          @scroll.window="scrolled = window.scrollY > 50">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center group flex-shrink-0">
+          <img src="https://akinaanimalhealth.com/skin/frontend/akina/default/images/veterinary-compounding-pharmacy.jpg" alt="Akina Animal Health - Veterinary Compounding Pharmacy" class="h-12 lg:h-14 w-auto">
+        </a>
+
+        <!-- Main Action Buttons -->
+        <div class="hidden md:flex items-center gap-3">
+          <a href="prescribe.html" class="btn-primary px-6 py-2.5 text-sm font-semibold text-white rounded-lg">
+            Prescribe Now
+          </a>
+          <a href="shop.html" class="btn-secondary-blue px-6 py-2.5 text-sm font-semibold text-white rounded-lg">
+            Shop Medications
+          </a>
+          <a href="refill.html" class="px-6 py-2.5 text-sm font-semibold text-secondary-600 border-2 border-secondary-600 rounded-lg hover:bg-secondary-50 transition-colors">
+            Refill My Prescription
+          </a>
+        </div>
+
+        <!-- Tagline -->
+        <div class="hidden lg:block text-right">
+          <p class="text-xl font-display font-bold text-primary-600 italic">Kindness Compounded™</p>
+          <p class="text-sm text-gray-600">Call <span class="font-semibold">855.234.9995</span> Fax <span class="font-semibold">855.234.9992</span></p>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button @click="mobileMenu = !mobileMenu" class="md:hidden p-2 rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors">
+          <i x-show="!mobileMenu" data-lucide="menu" class="w-6 h-6"></i>
+          <i x-show="mobileMenu" x-cloak data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+      <!-- Secondary Nav -->
+      <div class="hidden md:flex items-center gap-1 py-3 border-t border-gray-100">
+        <!-- Meet Akina -->
+        <div class="relative menu-trigger">
+          <a href="about.html" class="flex items-center gap-1 px-4 py-2 text-base font-semibold text-gray-700 hover:text-primary-600 rounded-lg hover:bg-primary-50 transition-colors">
+            Meet Akina <i data-lucide="chevron-down" class="w-4 h-4"></i>
+          </a>
+          <div class="mega-menu absolute left-0 top-full pt-4 w-[500px] z-50">
+            <div class="bg-white rounded-2xl shadow-2xl border border-gray-100 p-6">
+              <div class="grid grid-cols-2 gap-6">
+                <div>
+                  <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">About Us</h3>
+                  <div class="space-y-1">
+                    <a href="vision.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center text-primary-600 group-hover:bg-primary-200 transition-colors">
+                        <i data-lucide="eye" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Our Vision</p>
+                        <p class="text-xs text-gray-500">What drives us forward</p>
+                      </div>
+                    </a>
+                    <a href="mission.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center text-primary-600 group-hover:bg-primary-200 transition-colors">
+                        <i data-lucide="target" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Our Mission</p>
+                        <p class="text-xs text-gray-500">Kindness Compounded™</p>
+                      </div>
+                    </a>
+                    <a href="quality.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center text-primary-600 group-hover:bg-primary-200 transition-colors">
+                        <i data-lucide="shield-check" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Quality Assurance</p>
+                        <p class="text-xs text-gray-500">PCAB accredited standards</p>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div>
+                  <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">More</h3>
+                  <div class="space-y-1">
+                    <a href="accreditations.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600 group-hover:bg-amber-200 transition-colors">
+                        <i data-lucide="award" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Accreditations</p>
+                        <p class="text-xs text-gray-500">Our certifications</p>
+                      </div>
+                    </a>
+                    <a href="states.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-secondary-100 flex items-center justify-center text-secondary-600 group-hover:bg-blue-200 transition-colors">
+                        <i data-lucide="map" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">States Served</p>
+                        <p class="text-xs text-gray-500">48 states nationwide</p>
+                      </div>
+                    </a>
+                    <a href="newsroom.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-rose-100 flex items-center justify-center text-rose-600 group-hover:bg-rose-200 transition-colors">
+                        <i data-lucide="newspaper" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Newsroom</p>
+                        <p class="text-xs text-gray-500">Latest updates</p>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Veterinarians -->
+        <div class="relative menu-trigger">
+          <a href="veterinarians.html" class="flex items-center gap-1 px-4 py-2 text-base font-semibold text-gray-700 hover:text-primary-600 rounded-lg hover:bg-primary-50 transition-colors">
+            Veterinarians <i data-lucide="chevron-down" class="w-4 h-4"></i>
+          </a>
+          <div class="mega-menu absolute left-0 top-full pt-4 w-[600px] z-50">
+            <div class="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
+              <div class="grid grid-cols-5">
+                <div class="col-span-3 p-6">
+                  <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">For Veterinarians</h3>
+                  <div class="space-y-1">
+                    <a href="prescribe.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-600 to-primary-400 flex items-center justify-center text-white">
+                        <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Vet Portal</p>
+                        <p class="text-xs text-gray-500">Prescribe online easily</p>
+                      </div>
+                      <i data-lucide="arrow-right" class="w-4 h-4 text-primary-500 ml-auto"></i>
+                    </a>
+                    <a href="formulations.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-violet-100 flex items-center justify-center text-violet-600">
+                        <i data-lucide="flask-conical" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Custom Formulations</p>
+                        <p class="text-xs text-gray-500">Tailored medications</p>
+                      </div>
+                    </a>
+                    <a href="contact.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-secondary-100 flex items-center justify-center text-secondary-600">
+                        <i data-lucide="message-circle" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Ask Our Pharmacists</p>
+                        <p class="text-xs text-gray-500">Expert consultation</p>
+                      </div>
+                    </a>
+                    <a href="referral.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600">
+                        <i data-lucide="users" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Referral Program</p>
+                        <p class="text-xs text-gray-500">Partner with us</p>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-span-2 bg-gradient-to-br from-secondary-600 to-secondary-400 p-6 flex flex-col justify-center">
+                  <div class="text-5xl mb-4">👩‍⚕️</div>
+                  <h4 class="text-lg font-bold text-white mb-2">Vet Portal</h4>
+                  <p class="text-sm text-secondary-100 mb-4">Access our online portal to prescribe medications quickly and efficiently.</p>
+                  <a href="prescribe.html" class="inline-flex items-center gap-2 px-4 py-2 bg-white text-secondary-600 font-semibold rounded-full text-sm hover:bg-secondary-50 transition-colors">
+                    Access Portal
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pet Parents -->
+        <div class="relative menu-trigger">
+          <a href="pet-parents.html" class="flex items-center gap-1 px-4 py-2 text-base font-semibold text-gray-700 hover:text-primary-600 rounded-lg hover:bg-primary-50 transition-colors">
+            Pet Parents <i data-lucide="chevron-down" class="w-4 h-4"></i>
+          </a>
+          <div class="mega-menu absolute left-0 top-full pt-4 w-[600px] z-50">
+            <div class="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
+              <div class="grid grid-cols-5">
+                <div class="col-span-3 p-6">
+                  <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">For Pet Parents</h3>
+                  <div class="space-y-1">
+                    <a href="shop.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-600 to-primary-400 flex items-center justify-center text-white">
+                        <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Shop Medications</p>
+                        <p class="text-xs text-gray-500">Browse our products</p>
+                      </div>
+                      <i data-lucide="arrow-right" class="w-4 h-4 text-primary-500 ml-auto"></i>
+                    </a>
+                    <a href="refill.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-secondary-100 flex items-center justify-center text-secondary-600">
+                        <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Refill Prescription</p>
+                        <p class="text-xs text-gray-500">Quick and easy refills</p>
+                      </div>
+                    </a>
+                    <a href="kind-program.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-rose-100 flex items-center justify-center text-rose-600">
+                        <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">KiND Program</p>
+                        <p class="text-xs text-gray-500">Collaborative pet care</p>
+                      </div>
+                    </a>
+                    <a href="contact.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary-50 transition-colors group">
+                      <div class="w-10 h-10 rounded-lg bg-violet-100 flex items-center justify-center text-violet-600">
+                        <i data-lucide="phone" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <p class="font-semibold text-gray-900">Pharmacist Consultation</p>
+                        <p class="text-xs text-gray-500">Get expert advice</p>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-span-2 bg-gradient-to-br from-primary-600 to-primary-400 p-6 flex flex-col justify-center">
+                  <div class="text-5xl mb-4">🐕</div>
+                  <h4 class="text-lg font-bold text-white mb-2">Happy Pets</h4>
+                  <p class="text-sm text-primary-100 mb-4">Custom flavored medications your pet will actually enjoy taking.</p>
+                  <a href="shop.html" class="inline-flex items-center gap-2 px-4 py-2 bg-white text-primary-600 font-semibold rounded-full text-sm hover:bg-primary-50 transition-colors">
+                    Shop Now
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <a href="contact.html" class="px-4 py-2 text-base font-semibold text-gray-700 hover:text-primary-600 rounded-lg hover:bg-primary-50 transition-colors">
+          Contact Us
+        </a>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div x-show="mobileMenu" x-cloak
+           x-transition:enter="transition ease-out duration-200"
+           x-transition:enter-start="opacity-0 -translate-y-4"
+           x-transition:enter-end="opacity-100 translate-y-0"
+           x-transition:leave="transition ease-in duration-150"
+           x-transition:leave-start="opacity-100 translate-y-0"
+           x-transition:leave-end="opacity-0 -translate-y-4"
+           class="md:hidden py-6 border-t border-gray-100">
+        <!-- Mobile Action Buttons -->
+        <div class="space-y-3 mb-6">
+          <a href="prescribe.html" class="block w-full btn-primary px-4 py-3 text-center text-sm font-semibold text-white rounded-lg">
+            Prescribe Now
+          </a>
+          <a href="shop.html" class="block w-full btn-secondary-blue px-4 py-3 text-center text-sm font-semibold text-white rounded-lg">
+            Shop Medications
+          </a>
+          <a href="refill.html" class="block w-full px-4 py-3 text-center text-sm font-semibold text-secondary-600 border-2 border-secondary-600 rounded-lg">
+            Refill My Prescription
+          </a>
+        </div>
+        <div class="space-y-2 border-t border-gray-100 pt-6">
+          <a href="about.html" class="block px-4 py-3 text-base font-semibold text-gray-900 rounded-xl hover:bg-gray-50">Meet Akina</a>
+          <a href="veterinarians.html" class="block px-4 py-3 text-base font-semibold text-gray-900 rounded-xl hover:bg-gray-50">Veterinarians</a>
+          <a href="pet-parents.html" class="block px-4 py-3 text-base font-semibold text-gray-900 rounded-xl hover:bg-gray-50">Pet Parents</a>
+          <a href="contact.html" class="block px-4 py-3 text-base font-semibold text-gray-900 rounded-xl hover:bg-gray-50">Contact</a>
+        </div>
+        <div class="mt-6 pt-6 border-t border-gray-100 space-y-3">
+          <a href="#" class="block w-full px-4 py-3 text-center text-sm font-semibold text-gray-700 border-2 border-gray-200 rounded-full hover:border-primary-300">Sign In</a>
+          <a href="#" class="block w-full px-4 py-3 text-center text-sm font-semibold text-primary-600 hover:text-primary-700">Create Account</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+
+  <!-- Hero Section -->
+  <section class="relative py-24 lg:py-32 bg-gradient-to-br from-rose-600 via-rose-500 to-pink-400 text-white overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute top-10 right-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+      <div class="absolute bottom-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl"></div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <nav class="flex items-center gap-2 text-sm mb-8 reveal">
+        <a href="index.html" class="text-rose-200 hover:text-white transition-colors">Home</a>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-rose-300"></i>
+        <a href="about.html" class="text-rose-200 hover:text-white transition-colors">About</a>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-rose-300"></i>
+        <span class="text-white font-medium">Newsroom</span>
+      </nav>
+      <div class="max-w-4xl">
+        <div class="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-white/20 backdrop-blur-sm">
+          <i data-lucide="newspaper" class="w-5 h-5"></i>
+          <span class="text-sm font-semibold">News & Updates</span>
+        </div>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold font-display mb-6 reveal">
+          Akina <span class="text-primary-300">Newsroom</span>
+        </h1>
+        <p class="text-xl text-rose-100 leading-relaxed max-w-2xl reveal">
+          Stay up to date with the latest news, press releases, product updates, and stories from Akina Animal Health.
+        </p>
+      </div>
+    </div>
+    <div class="absolute -bottom-10 -right-10 text-[300px] opacity-5">📰</div>
+  </section>
+
+  <!-- Featured Article -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-8 items-center reveal">
+        <div class="relative rounded-3xl overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&q=80" alt="Featured news" class="w-full h-[400px] object-cover">
+          <div class="absolute top-4 left-4">
+            <span class="px-3 py-1 bg-primary-500 text-white text-sm font-semibold rounded-full">Featured</span>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-4 mb-4">
+            <span class="text-sm text-rose-600 font-semibold">Company News</span>
+            <span class="text-gray-400">•</span>
+            <span class="text-sm text-gray-500">December 1, 2024</span>
+          </div>
+          <h2 class="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">Akina Animal Health Expands Service to 48 States</h2>
+          <p class="text-gray-600 mb-6 line-clamp-3">
+            We're thrilled to announce that Akina Animal Health has expanded our shipping capabilities to serve veterinarians and pet parents in 48 states across the United States. This milestone represents years of work to bring our custom compounded medications to more pets in need.
+          </p>
+          <a href="#" class="inline-flex items-center gap-2 text-primary-600 font-semibold hover:text-primary-700 transition-colors">
+            Read Full Story
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter & News Grid -->
+  <section class="py-16 lg:py-24 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Filters -->
+      <div class="flex flex-wrap items-center justify-center gap-3 mb-12 reveal">
+        <button @click="activeFilter = 'all'" :class="activeFilter === 'all' ? 'bg-rose-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'" class="px-5 py-2 rounded-full font-medium text-sm transition-colors">All News</button>
+        <button @click="activeFilter = 'company'" :class="activeFilter === 'company' ? 'bg-rose-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'" class="px-5 py-2 rounded-full font-medium text-sm transition-colors">Company News</button>
+        <button @click="activeFilter = 'product'" :class="activeFilter === 'product' ? 'bg-rose-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'" class="px-5 py-2 rounded-full font-medium text-sm transition-colors">Product Updates</button>
+        <button @click="activeFilter = 'press'" :class="activeFilter === 'press' ? 'bg-rose-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'" class="px-5 py-2 rounded-full font-medium text-sm transition-colors">Press Releases</button>
+        <button @click="activeFilter = 'pet-health'" :class="activeFilter === 'pet-health' ? 'bg-rose-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'" class="px-5 py-2 rounded-full font-medium text-sm transition-colors">Pet Health Tips</button>
+      </div>
+
+      <!-- News Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Article 1 -->
+        <article x-show="activeFilter === 'all' || activeFilter === 'product'" class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 card-hover reveal">
+          <div class="relative">
+            <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&q=80" alt="New flavors" class="w-full h-48 object-cover">
+            <span class="absolute top-4 left-4 px-3 py-1 bg-secondary-500 text-white text-xs font-semibold rounded-full">Product Update</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
+              <i data-lucide="calendar" class="w-4 h-4"></i>
+              <span>November 15, 2024</span>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-3 line-clamp-2">Introducing Three New Flavor Options for Canine Medications</h3>
+            <p class="text-gray-600 text-sm mb-4 line-clamp-3">We've added bacon, peanut butter, and maple flavors to our canine medication lineup, making it easier than ever to administer medications to picky pups.</p>
+            <a href="#" class="text-primary-600 font-semibold text-sm hover:text-primary-700 transition-colors">Read More →</a>
+          </div>
+        </article>
+
+        <!-- Article 2 -->
+        <article x-show="activeFilter === 'all' || activeFilter === 'company'" class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 card-hover reveal">
+          <div class="relative">
+            <img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=600&q=80" alt="Team photo" class="w-full h-48 object-cover">
+            <span class="absolute top-4 left-4 px-3 py-1 bg-rose-500 text-white text-xs font-semibold rounded-full">Company News</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
+              <i data-lucide="calendar" class="w-4 h-4"></i>
+              <span>November 8, 2024</span>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-3 line-clamp-2">Akina Celebrates 15 Years of Kindness Compounded</h3>
+            <p class="text-gray-600 text-sm mb-4 line-clamp-3">This month marks our 15th anniversary of serving veterinarians and pet parents with custom compounded medications. We reflect on our journey and look ahead.</p>
+            <a href="#" class="text-primary-600 font-semibold text-sm hover:text-primary-700 transition-colors">Read More →</a>
+          </div>
+        </article>
+
+        <!-- Article 3 -->
+        <article x-show="activeFilter === 'all' || activeFilter === 'press'" class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 card-hover reveal">
+          <div class="relative">
+            <img src="https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=600&q=80" alt="PCAB accreditation" class="w-full h-48 object-cover">
+            <span class="absolute top-4 left-4 px-3 py-1 bg-amber-500 text-white text-xs font-semibold rounded-full">Press Release</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
+              <i data-lucide="calendar" class="w-4 h-4"></i>
+              <span>October 22, 2024</span>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-3 line-clamp-2">Akina Achieves PCAB Reaccreditation with Zero Deficiencies</h3>
+            <p class="text-gray-600 text-sm mb-4 line-clamp-3">Our facility has been reaccredited by the Pharmacy Compounding Accreditation Board with a perfect inspection, demonstrating our commitment to quality.</p>
+            <a href="#" class="text-primary-600 font-semibold text-sm hover:text-primary-700 transition-colors">Read More →</a>
+          </div>
+        </article>
+
+        <!-- Article 4 -->
+        <article x-show="activeFilter === 'all' || activeFilter === 'pet-health'" class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 card-hover reveal">
+          <div class="relative">
+            <img src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=600&q=80" alt="Cat health" class="w-full h-48 object-cover">
+            <span class="absolute top-4 left-4 px-3 py-1 bg-emerald-500 text-white text-xs font-semibold rounded-full">Pet Health Tips</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
+              <i data-lucide="calendar" class="w-4 h-4"></i>
+              <span>October 15, 2024</span>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-3 line-clamp-2">5 Tips for Giving Medication to Finicky Cats</h3>
+            <p class="text-gray-600 text-sm mb-4 line-clamp-3">Our pharmacists share their expert tips for making medication time easier for cats and their owners, from flavor choices to administration techniques.</p>
+            <a href="#" class="text-primary-600 font-semibold text-sm hover:text-primary-700 transition-colors">Read More →</a>
+          </div>
+        </article>
+
+        <!-- Article 5 -->
+        <article x-show="activeFilter === 'all' || activeFilter === 'company'" class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 card-hover reveal">
+          <div class="relative">
+            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&q=80" alt="Team expansion" class="w-full h-48 object-cover">
+            <span class="absolute top-4 left-4 px-3 py-1 bg-rose-500 text-white text-xs font-semibold rounded-full">Company News</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
+              <i data-lucide="calendar" class="w-4 h-4"></i>
+              <span>October 1, 2024</span>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-3 line-clamp-2">Welcome to Our New Chief Pharmacist, Dr. Sarah Mitchell</h3>
+            <p class="text-gray-600 text-sm mb-4 line-clamp-3">We're excited to announce that Dr. Sarah Mitchell has joined our team as Chief Pharmacist, bringing 15+ years of veterinary compounding expertise.</p>
+            <a href="#" class="text-primary-600 font-semibold text-sm hover:text-primary-700 transition-colors">Read More →</a>
+          </div>
+        </article>
+
+        <!-- Article 6 -->
+        <article x-show="activeFilter === 'all' || activeFilter === 'product'" class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 card-hover reveal">
+          <div class="relative">
+            <img src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?w=600&q=80" alt="Same-day shipping" class="w-full h-48 object-cover">
+            <span class="absolute top-4 left-4 px-3 py-1 bg-secondary-500 text-white text-xs font-semibold rounded-full">Product Update</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
+              <i data-lucide="calendar" class="w-4 h-4"></i>
+              <span>September 20, 2024</span>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-3 line-clamp-2">Same-Day Shipping Now Extended to 3PM EST Cutoff</h3>
+            <p class="text-gray-600 text-sm mb-4 line-clamp-3">We've extended our same-day shipping cutoff from 2PM to 3PM EST, giving you more time to get orders in for fast delivery to your patients.</p>
+            <a href="#" class="text-primary-600 font-semibold text-sm hover:text-primary-700 transition-colors">Read More →</a>
+          </div>
+        </article>
+      </div>
+
+      <!-- Load More -->
+      <div class="text-center mt-12 reveal">
+        <button class="btn-primary shine px-8 py-4 text-white font-semibold rounded-full inline-flex items-center gap-2">
+          Load More Articles
+          <i data-lucide="chevron-down" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter CTA -->
+  <section class="py-24 lg:py-32 bg-gradient-to-br from-rose-600 to-pink-400 text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-display mb-6 reveal">
+        Stay in the Loop
+      </h2>
+      <p class="text-xl text-rose-100 mb-10 reveal">
+        Subscribe to our newsletter for the latest news, pet health tips, and exclusive updates from Akina.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto reveal">
+        <input type="email" placeholder="Enter your email" class="flex-1 px-6 py-4 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50">
+        <button class="px-8 py-4 bg-white text-rose-600 font-semibold rounded-full hover:bg-gray-100 transition-colors shine">
+          Subscribe
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Press Contact -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-gray-50 rounded-3xl p-8 lg:p-12 text-center reveal">
+        <div class="w-16 h-16 rounded-full bg-rose-100 flex items-center justify-center mx-auto mb-6">
+          <i data-lucide="mail" class="w-8 h-8 text-rose-600"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">Media Inquiries</h3>
+        <p class="text-gray-600 mb-6">For press inquiries, interview requests, or media kit access, please contact our communications team.</p>
+        <a href="mailto:press@akinaanimalhealth.com" class="inline-flex items-center gap-2 text-rose-600 font-semibold hover:text-rose-700 transition-colors">
+          <i data-lucide="mail" class="w-5 h-5"></i>
+          press@akinaanimalhealth.com
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-8 md:grid-cols-4">
+        <div>
+          <img src="https://akinaanimalhealth.com/skin/frontend/akina/default/images/footer_logo_big.png" alt="Akina" class="h-12 w-auto mb-4">
+          <p class="text-gray-400 text-sm">Kindness Compounded. Custom veterinary medications made with care.</p>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold tracking-wider uppercase mb-4">Meet Akina</h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href="vision.html" class="text-gray-400 hover:text-white transition-colors">Our Vision</a></li>
+            <li><a href="mission.html" class="text-gray-400 hover:text-white transition-colors">Our Mission</a></li>
+            <li><a href="quality.html" class="text-gray-400 hover:text-white transition-colors">Quality Assurance</a></li>
+            <li><a href="newsroom.html" class="text-primary-400 hover:text-primary-300 transition-colors">Newsroom</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold tracking-wider uppercase mb-4">Quick Links</h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">Shop Medications</a></li>
+            <li><a href="prescribe.html" class="text-gray-400 hover:text-white transition-colors">Prescribe Now</a></li>
+            <li><a href="refill.html" class="text-gray-400 hover:text-white transition-colors">Refill Prescription</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold tracking-wider uppercase mb-4">Contact</h3>
+          <a href="tel:8552349995" class="flex items-center gap-2 text-gray-400 hover:text-primary-400 transition-colors text-sm">
+            <i data-lucide="phone" class="w-4 h-4"></i> (855) 234-9995
+          </a>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-12 pt-8">
+        <p class="text-center text-sm text-gray-500">© 2024 Akina Animal Health. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealOnScroll = () => {
+      revealElements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        if (elementTop < window.innerHeight - 150) element.classList.add('active');
+      });
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+  </script>
+</body>
+</html>
